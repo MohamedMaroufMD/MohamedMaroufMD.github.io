@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mohamed Marouf, MD</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='85' font-family='Inter' font-weight='700' fill='%230066ff'>M</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;400&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: #0a0a0f;
+      color: #f8f9ff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body {
+      position: relative;
+      min-height: 100vh;
+    }
+    /* Multiple animated gradient backgrounds */
+    .bg-animated {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(45deg, #0066ff, #00ccff, #00ffff, #0080ff, #0040ff);
+      background-size: 400% 400%;
+      opacity: 0.7;
+      animation: gradientShift 8s ease-in-out infinite, rotate 20s linear infinite;
+      filter: blur(60px) brightness(0.4);
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      25% { background-position: 100% 50%; }
+      50% { background-position: 100% 100%; }
+      75% { background-position: 0% 100%; }
+    }
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    /* Multiple particle systems */
+    .particles-container {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+      animation: float 6s ease-in-out infinite;
+    }
+    .particle:nth-child(1) { width: 8px; height: 8px; top: 10%; left: 20%; animation-delay: 0s; }
+    .particle:nth-child(2) { width: 12px; height: 12px; top: 30%; right: 25%; animation-delay: 1s; }
+    .particle:nth-child(3) { width: 6px; height: 6px; bottom: 40%; left: 15%; animation-delay: 2s; }
+    .particle:nth-child(4) { width: 10px; height: 10px; top: 60%; left: 70%; animation-delay: 3s; }
+    .particle:nth-child(5) { width: 14px; height: 14px; bottom: 20%; right: 10%; animation-delay: 4s; }
+    .particle:nth-child(6) { width: 9px; height: 9px; top: 80%; left: 50%; animation-delay: 5s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); opacity: 0.3; }
+      25% { transform: translateY(-30px) translateX(20px) rotate(90deg); opacity: 0.8; }
+      50% { transform: translateY(-60px) translateX(-10px) rotate(180deg); opacity: 0.5; }
+      75% { transform: translateY(-30px) translateX(30px) rotate(270deg); opacity: 0.9; }
+    }
+    /* Rotating orbs */
+    .rotating-orbs {
+      position: fixed;
+      top: 50%; left: 50%;
+      width: 200px; height: 200px;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: rotateOrb 12s linear infinite;
+    }
+    .orb:nth-child(1) {
+      width: 60px; height: 60px;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      animation-delay: 0s;
+    }
+    .orb:nth-child(2) {
+      width: 40px; height: 40px;
+      top: 50%; right: 0;
+      transform: translateY(-50%);
+      animation-delay: 4s;
+    }
+    .orb:nth-child(3) {
+      width: 50px; height: 50px;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      animation-delay: 8s;
+    }
+    @keyframes rotateOrb {
+      0% { transform: translateX(-50%) rotate(0deg); }
+      100% { transform: translateX(-50%) rotate(360deg); }
+    }
+    .main {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+      pointer-events: auto;
+    }
+    .card {
+      background: rgba(15, 15, 25, 0.85);
+      border-radius: 24px;
+      box-shadow: 0 8px 40px 0 #0066ff44, 0 1.5px 8px #00ccff44;
+      padding: 56px 40px 40px 40px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      backdrop-filter: blur(16px) saturate(1.3);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      animation: cardFloat 1.4s cubic-bezier(.39,.575,.56,1.000), cardGlow 4s ease-in-out infinite alternate;
+      position: relative;
+      overflow: hidden;
+      z-index: 5;
+      pointer-events: auto;
+    }
+    @keyframes cardFloat {
+      0% { opacity: 0; transform: scale(0.9) translateY(60px) rotateX(10deg); }
+      100% { opacity: 1; transform: scale(1) translateY(0) rotateX(0deg); }
+    }
+    @keyframes cardGlow {
+      0% { box-shadow: 0 8px 40px 0 #0066ff44, 0 1.5px 8px #00ccff44; }
+      100% { box-shadow: 0 8px 40px 0 #00ffff44, 0 1.5px 8px #0080ff44; }
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: 50%;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, #0066ffcc 0%, transparent 70%);
+      filter: blur(50px);
+      opacity: 0.2;
+      transform: translateX(-50%);
+      pointer-events: none;
+      animation: glowPulse 6s ease-in-out infinite alternate, glowRotate 15s linear infinite;
+    }
+    @keyframes glowPulse {
+      0% { left: 40%; opacity: 0.1; transform: translateX(-50%) scale(0.8); }
+      100% { left: 60%; opacity: 0.3; transform: translateX(-50%) scale(1.3); }
+    }
+    @keyframes glowRotate {
+      0% { transform: translateX(-50%) rotate(0deg); }
+      100% { transform: translateX(-50%) rotate(360deg); }
+    }
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 24px;
+      padding: 2px;
+      background: linear-gradient(45deg, #0066ff, #00ccff, #00ffff, #0080ff, #0040ff);
+      background-size: 400% 400%;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      animation: borderRotate 8s linear infinite;
+    }
+    @keyframes borderRotate {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 400% 50%; }
+    }
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      margin-bottom: 22px;
+      border: 4px solid transparent;
+      background: linear-gradient(45deg, #0066ff, #00ccff, #00ffff, #0080ff) border-box;
+      box-shadow: 0 0 32px #0066ffcc, 0 2px 12px #00ccff55;
+      background-clip: padding-box;
+      animation: avatarPulse 3s infinite alternate cubic-bezier(.39,.575,.56,1.000);
+      transition: box-shadow 0.3s;
+    }
+    @keyframes avatarPulse {
+      0% { box-shadow: 0 0 32px #0066ffcc, 0 2px 12px #00ccff55; }
+      100% { box-shadow: 0 0 48px #0066ffee, 0 4px 24px #00ccff88; }
+    }
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #fff;
+      background: linear-gradient(90deg, #0066ff 0%, #00ccff 25%, #00ffff 50%, #0080ff 75%, #0040ff 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 2px 8px #0066ffaa);
+      animation: textShimmer 4s ease-in-out infinite;
+    }
+    @keyframes textShimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .animated-greeting {
+      font-size: 1.15rem;
+      color: #66ccff;
+      margin-bottom: 20px;
+      min-height: 28px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: color 0.3s;
+      text-shadow: 0 2px 8px #0066ffaa;
+      animation: greetingGlow 3s ease-in-out infinite alternate;
+    }
+    @keyframes greetingGlow {
+      0% { color: #66ccff; text-shadow: 0 2px 8px #0066ffaa; }
+      100% { color: #00ffff; text-shadow: 0 2px 8px #00ffffaa; }
+    }
+    .about {
+      font-size: 1.13rem;
+      color: #e6f3ff;
+      margin-bottom: 32px;
+      line-height: 1.7;
+      text-shadow: 0 1px 4px #00ccff55;
+    }
+    .about a {
+      color: #66ccff;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .about a:hover {
+      color: #fff;
+    }
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 10;
+      pointer-events: auto;
+    }
+    .socials a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a1a2e 60%, #0066ff 100%);
+      color: #66ccff;
+      font-size: 1.6rem;
+      transition: transform 0.22s, box-shadow 0.22s, background 0.22s;
+      box-shadow: 0 2px 12px #0066ff55;
+      text-decoration: none;
+      border: 1.5px solid #0066ff;
+      filter: drop-shadow(0 2px 8px #0066ffaa);
+      animation: socialFloat 4s ease-in-out infinite;
+      position: relative;
+      z-index: 11;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .socials a:nth-child(1) { animation-delay: 0s; }
+    .socials a:nth-child(2) { animation-delay: 1.33s; }
+    .socials a:nth-child(3) { animation-delay: 2.66s; }
+    .socials a:nth-child(4) { animation-delay: 3.99s; }
+    @keyframes socialFloat {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-10px) scale(1.05); }
+    }
+    .socials a:hover {
+      transform: scale(1.18) rotate(4deg);
+      box-shadow: 0 4px 24px #0066ff88;
+      background: linear-gradient(135deg, #0066ff 60%, #1a1a2e 100%);
+      color: #fff;
+    }
+    .github-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .github-icon::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background: currentColor;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z'/%3E%3C/svg%3E");
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z'/%3E%3C/svg%3E");
+      mask-size: contain;
+      -webkit-mask-size: contain;
+      mask-repeat: no-repeat;
+      -webkit-mask-repeat: no-repeat;
+    }
+    .orcid-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .orcid-icon::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background: currentColor;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-2 16.5v-9l2.5 2.5L18 7.5v9l-2.5-2.5L10 16.5z'/%3E%3C/svg%3E");
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-2 16.5v-9l2.5 2.5L18 7.5v9l-2.5-2.5L10 16.5z'/%3E%3C/svg%3E");
+      mask-size: contain;
+      -webkit-mask-size: contain;
+      mask-repeat: no-repeat;
+      -webkit-mask-repeat: no-repeat;
+    }
+    .contact {
+      margin-top: 18px;
+      font-size: 1.05rem;
+      color: #b0c4de;
+      text-shadow: 0 1px 4px #00ccff55;
+    }
+    .contact a {
+      color: #66ccff;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .contact a:hover {
+      color: #fff;
+    }
+    @media (max-width: 600px) {
+      .card { padding: 24px 4px; }
+      h1 { font-size: 1.3rem; }
+      .avatar { width: 80px; height: 80px; }
+    }
+  </style>
+  <script>
+    // Animated greeting text
+    document.addEventListener('DOMContentLoaded', function() {
+      const greetings = [
+        '✨ Hello, I\'m Mohamed!',
+        '🚀 Physician. Researcher. Innovator.',
+        '🌟 Passionate about tech-driven impact.',
+        '🤝 Bridging research and real-world healthcare.',
+        '🧠 Blending clinical care with smart solutions.',
+        '💫 Let\'s connect!'
+      ];
+      let idx = 0;
+      const el = document.querySelector('.animated-greeting');
+      function nextGreeting() {
+        el.textContent = greetings[idx];
+        idx = (idx + 1) % greetings.length;
+      }
+      nextGreeting();
+      setInterval(nextGreeting, 2200);
+    });
+    // Create multiple particle systems
+    document.addEventListener('DOMContentLoaded', function() {
+      const particlesContainer = document.createElement('div');
+      particlesContainer.className = 'particles-container';
+      document.body.appendChild(particlesContainer);
+      
+      for (let i = 0; i < 6; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particlesContainer.appendChild(particle);
+      }
+      
+      const orbsContainer = document.createElement('div');
+      orbsContainer.className = 'rotating-orbs';
+      document.body.appendChild(orbsContainer);
+      
+      for (let i = 0; i < 3; i++) {
+        const orb = document.createElement('div');
+        orb.className = 'orb';
+        orbsContainer.appendChild(orb);
+      }
+    });
+  </script>
+</head>
+<body>
+  <div class="bg-animated"></div>
+  <div class="main">
+    <div class="card">
+      <img src="https://github.com/user-attachments/assets/0421ffa7-4c4f-47c7-a5c1-2400537509a8" alt="Mohamed Marouf, MD" class="avatar" onerror="this.style.display='none'"/>
+      <h1>Mohamed Marouf, MD</h1>
+      <div class="animated-greeting"></div>
+      <div class="about">
+        Physician, researcher, and innovator dedicated to advancing healthcare through technology, clinical insight, and meaningful solutions.
+      </div>
+      <div class="socials">
+        <a href="https://www.linkedin.com/in/mohamedmaroufmd/" target="_blank" title="LinkedIn"><span>in</span></a>
+        <a href="https://github.com/MohamedMaroufMD" target="_blank" title="GitHub"><div class="github-icon"></div></a>
+        <a href="https://x.com/MohamedMaroufMD" target="_blank" title="X (Twitter)"><span>𝕏</span></a>
+
+      </div>
+      <div class="contact">
+        <strong>ORCID:</strong> <a href="https://orcid.org/0000-0001-7480-371X" target="_blank" style="pointer-events: auto; z-index: 12; position: relative;">0000-0001-7480-371X</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html> 
